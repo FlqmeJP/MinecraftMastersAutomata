@@ -8,8 +8,8 @@ int main(int argc, char *argv[]) {
     int k = 1; // 配列に値を入れるときに使用する
     int i;
     int flag = 0;
-    int cnt1 = 0;
-    int cnt2 = 0;
+    int cnt1 = 1;
+    int cnt2 = 1;
     int cnt3 = 0;
 
     init(); // Minecraftのゲームコントロール関数．ウィンドウサイズを設定する等を行う．
@@ -71,7 +71,14 @@ int main(int argc, char *argv[]) {
                 if (a == 0 || a == 100000) {
                     flag = 0;
                 }
+                
                 if (cnt1 % 7 == 0) {
+                    printf("B 攻撃*5\n");
+                    attackLeft();
+                    attackLeft();
+                    attackLeft();
+                    attackLeft();
+                    attackLeft();
                     printf("B ダッシュ\n");
                     moveDash(3);
                     a = detectZombie1();
@@ -80,20 +87,9 @@ int main(int argc, char *argv[]) {
                         printf("B ダッシュ\n");
                         moveDash(3);
                     }
-                    if (cnt1 % 18 == 0) {
-                        for (i = 0; i < 4; i++) {
-                            printf("B 視点左\n");
-                            pushKey("h");
-                            a = detectZombie1();
-                            printf("B %07d\n", a);
-                            if (a != 100000) {
-                                break;
-                            }
-                        }
-                    }
                 }
-                cnt1++;
-                cnt3++;
+            cnt1++;
+            cnt3++;
             }
             flag = 0;
         }
@@ -161,4 +157,6 @@ int main(int argc, char *argv[]) {
 カメラ視点　一人称
 手の表示　オフ
 視野　70度
+手ぶれ　オフ
+画面の揺れ　オフ
 */
