@@ -1,3 +1,0 @@
-#MinecraftMastersAutomata
-
-共同開発したスクリプトがここにプッシュされる。
