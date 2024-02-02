@@ -36,9 +36,8 @@ int main(int argc, char *argv[]) {
         if (b[4] == 1) {
 
         } else if (b[3] == 1) {
-            printf("A 後ろに移動 視点左\n");
+            printf("A 後ろに移動\n");
             moveBack(1);
-            pushKey("h");
             printf("A 攻撃*5\n");
             attackLeft();
             attackLeft();
@@ -46,9 +45,8 @@ int main(int argc, char *argv[]) {
             attackLeft();
             attackLeft();
         } else if (b[5] == 1) {
-            printf("A 後ろに移動 視点右\n");
+            printf("A 後ろに移動\n");
             moveBack(1);
-            pushKey("k");
             printf("A 攻撃*5\n");
             attackLeft();
             attackLeft();
@@ -141,7 +139,7 @@ int main(int argc, char *argv[]) {
 
 ・キーボード＆マウス
 フルキーボードゲームプレイ　オン
-スムース回転スピード 5
+スムース回転スピード 4
 中心を見る C
 スムースに下を見る J
 スムースに左を見る H
