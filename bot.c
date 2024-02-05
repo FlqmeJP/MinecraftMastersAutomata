@@ -32,10 +32,9 @@ int main(int argc, char *argv[]) {
             k = k * 10;
         }
         k = 1;
-        // 0:左上 1:中央上(常に1になる) 2:右上 3:左下 4:中央下 5:右下 6:ヒット判定(使わない)
+        // 0:左上 1:中央上 2:右上 3:左下 4:中央下 5:右下 6:ヒット判定(使わない)
         if (b[4] == 1) {
-
-        } else if (b[3] == 1) {
+            } else if (b[3] == 1) {
             printf("A 後ろに移動\n");
             moveBack(1);
             printf("A 攻撃*5\n");
@@ -66,28 +65,37 @@ int main(int argc, char *argv[]) {
                 pushKey("k");
                 a = detectZombie1();
                 printf("B %07d\n", a);
-                if (a == 0 || a == 100000) {
+                if (a == 0 || a ==  100000) {
                     flag = 0;
                 }
                 
-                if (cnt1 % 7 == 0) {
+                if (cnt1 % 6 == 0) {
                     printf("B 攻撃*5\n");
                     attackLeft();
                     attackLeft();
                     attackLeft();
                     attackLeft();
                     attackLeft();
-                    printf("B ダッシュ\n");
-                    moveDash(3);
                     a = detectZombie1();
                     printf("B %07d\n", a);
-                    if (a == 0 || a == 100000) {
+                    if (a == 0 || a ==  100000) {
                         printf("B ダッシュ\n");
                         moveDash(3);
+                        a = detectZombie1();
+                        printf("B %07d\n", a);
+                        if (a == 0 || a ==  100000) {
+                            printf("B ダッシュ\n");
+                            moveDash(3);
+                    }
                     }
                 }
-            cnt1++;
-            cnt3++;
+                a = detectZombie1();
+                printf("B %07d\n", a);
+                if (a == 0 || a ==  100000) {
+                    flag = 0;
+                }
+                cnt1++;
+                cnt3++;
             }
             flag = 0;
         }
@@ -100,15 +108,20 @@ int main(int argc, char *argv[]) {
                 k = k * 10;
             }
             k = 1;
-            if (cnt2 == 5||cnt2 == 5) {
+            if (cnt2 == 5||cnt2 == 15) {
                 printf("C 視点左\n");
-                cameraLeft(0.5);
+                pushKey("h");
             }
-            if (cnt2 == 15) {
+            if (cnt2 == 10) {
+                printf("C 視点右\n");
+                pushKey("k");
+            }
+
+            if (cnt2 == 20) {
                 printf("C ダッシュ\n");
                 moveDash(3);
             }
-            if (b[4] == 0 || cnt2 > 15) {
+            if ((b[4] == 0)|| cnt2 > 20) {
                 flag = 1;
                 cnt2 = 0;
             }
@@ -119,7 +132,7 @@ int main(int argc, char *argv[]) {
         }
         flag = 0;
 
-        if (cnt3 > 50) {
+        if (cnt3 > 40) {
             cnt3 = 0;
         }
 
@@ -139,7 +152,7 @@ int main(int argc, char *argv[]) {
 
 ・キーボード＆マウス
 フルキーボードゲームプレイ　オン
-スムース回転スピード 4
+スムース回転スピード 5
 中心を見る C
 スムースに下を見る J
 スムースに左を見る H
@@ -154,7 +167,7 @@ int main(int argc, char *argv[]) {
 明るさ 100
 カメラ視点　一人称
 手の表示　オフ
-視野　70度
+視野　50度
 手ぶれ　オフ
 画面の揺れ　オフ
 */
