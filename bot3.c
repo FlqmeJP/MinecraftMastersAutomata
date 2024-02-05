@@ -85,7 +85,7 @@ int notz1(int z1[],int cnt3){   // 画面内にゾンビがいない間、視点
             flag = zombie1(z1);
             if (flag == 1) {
                 printf("ダッシュ\n");
-                moveDash(3);
+                moveDash(1.5);
             }
         }
         
