@@ -360,7 +360,26 @@ int main(int argc, char *argv[]) {
 雲を表示する オフ
 美しい空 オフ
 
-MINECRAFT_CONTEST/python/minecraft/pushKey.py sleep_time = 0.05
+MINECRAFT_CONTEST/python/minecraft/pushKey.py 
+import pydirectinput
+
+import time
+
+import sys
+
+################################
+sleep_time = 0.05
+################################
+
+def pushKey(key):
+    pydirectinput.keyDown(key)
+    time.sleep(sleep_time)
+    pydirectinput.keyUp(key)
+
+if __name__ == '__main__':
+    pushKey(sys.argv[1])
+
+----------------------------------------------------------
 
 MINECRAFT_CONTEST/python/minecraft/clickLeft_Long.py
 import pydirectinput
