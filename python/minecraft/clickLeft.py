@@ -1,15 +1,30 @@
-import pydirectinput
-
 import time
+import threading
+from pynput.mouse import Controller, Button
+from pynput.keyboard import Listener, KeyCode, Controller as KeyboardController
 
-################################
-sleep_time = 0.01
-################################
+TOGGLE_KEY = KeyCode(char="t")
+QUICK_ATTACK_KEY = KeyCode(char="q")
 
-def clickLeft():
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
+clicking = False
+mouse = Controller()
+keyboard = KeyboardController()
 
-if __name__ == '__main__':
-    clickLeft()
+def clicker():
+    while True:
+        if clicking:
+            # 必要に応じてキー間の遅延をカスタマイズできます
+            keyboard.press(QUICK_ATTACK_KEY)
+            time.sleep(0.01)  # 必要に応じてこの遅延を調整してください
+            keyboard.release(QUICK_ATTACK_KEY)
+
+def toggle_event(key):
+    if key == TOGGLE_KEY:
+        global clicking
+        clicking = not clicking
+
+click_thread = threading.Thread(target=clicker)
+click_thread.start()
+
+with Listener(on_press=toggle_event) as listener:
+    listener.join()
