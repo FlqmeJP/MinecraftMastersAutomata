@@ -91,11 +91,11 @@ void z1judge(int z1[]){
     if (z1[4] == 1) {
     } else if (z1[3] == 1) {
         printf("後ろに移動\n");
-        moveBack(1);
+        moveBack(0.7);
         attack5();
     } else if (z1[5] == 1) {
         printf("後ろに移動\n");
-        moveBack(1);
+        moveBack(0.7);
         attack5();
     } else if (z1[0] == 1) {
         printf("視点左\n");
@@ -111,11 +111,11 @@ void z2judge(long int z2[]){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11
     zombie2(z2);
     if (z2[13]==1||z2[14]==1||z2[12]==1) {
         printf("後ろに移動\n");
-        moveBack(0.7);
+        moveBack(0.5);
         attack5();
     } else if (z2[2] == 1||z2[5] == 1||z2[8] == 1||z2[11]== 1) {
         printf("後ろに移動\n");
-        moveBack(1);
+        moveBack(0.6);
         attack5();
     } else if (z2[4] == 1||z2[10] == 1) {
         printf("視点左\n");
@@ -149,7 +149,7 @@ int notz1(int z1[],int cnt3){   // 画面内にゾンビがいない間、視点
         }
         flag = zombie1(z1);
         if (flag == 1) {
-        pushKey("k");
+        pushKey("h");
         }
         flag = zombie1(z1);
         if (flag == 1) {
@@ -191,7 +191,7 @@ int notz2(long int z2[],int cnt3){   // 画面内にゾンビがいない間、�
         }
         flag = zombie2(z2);
         if (flag == 1) {
-        pushKey("k");
+        pushKey("h");
         }
         flag = zombie2(z2);
         if (flag == 1) {
@@ -288,7 +288,7 @@ void attack5(void){
     printf("攻撃*5\n");
     for(i=0;i<5;i++){
         attackLeft();
-        if(i==1){moveBack(0.7);}
+        if(i==1){moveBack(0.6);}
     }
 }
 
@@ -296,7 +296,7 @@ void attack10(void){
     int i;
     printf("攻撃*10\n");
         attackLeft_long();
-        moveBack(0.7);
+        moveBack(0.6);
         attackLeft_long();
     
 }
