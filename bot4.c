@@ -4,14 +4,14 @@
 
 int zombie1(int z1[]);
 int zombie2(long int z2[]);
-int notz1(int z1[],int cnt3);
-int notz2(long int z2[],int cnt3);
-void z1judge(int z1[]);
-void z2judge(long int z2[]);
-int attackz1(int z1[],int cnt3);
-int attackz2(long int z2[],int cnt3);
 void z1print(int z1[]);
 void z2print(long int z2[]);
+void z1judge(int z1[]);
+void z2judge(long int z2[]);
+int notz1(int z1[],int cnt3);
+int notz2(long int z2[],int cnt3);
+int attackz1(int z1[],int cnt3);
+int attackz2(long int z2[],int cnt3);
 int reset(int cnt3);
 void attack5(void);
 
@@ -84,15 +84,55 @@ void z2print(long int z2[]){
     printf("\n");
 }
 
-int reset(int cnt3){   // 子どもゾンビ用に視点を調整
-    if (cnt3 > 20) {cnt3 = 0;}
-    if (cnt3 == 0) { 
-        printf("視点リセット\n");
-        pushKey("c"); 
-        pushKey("j");
-        cnt3++;
+void z1judge(int z1[]){ 
+    int i;
+    zombie1(z1);
+    if (z1[4] == 1) {
+    } else if (z1[3] == 1) {
+        printf("後ろに移動\n");
+        moveBack(1);
+        attack5();
+    } else if (z1[5] == 1) {
+        printf("後ろに移動\n");
+        moveBack(1);
+        attack5();
+    } else if (z1[0] == 1) {
+        printf("視点左\n");
+        pushKey("h");
+    } else if (z1[2] == 1) {
+        printf("視点右\n");
+        pushKey("k");
+    } 
+}
+
+void z2judge(long int z2[]){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11 左上 12,13,14 中央   遠い←→近い
+    int i;
+    zombie2(z2);
+    if (z2[13]==1||z2[14]==1||z2[12]==1) {
+        printf("後ろに移動\n");
+        moveBack(0.7);
+        attack5();
+    } else if (z2[2] == 1||z2[5] == 1||z2[8] == 1||z2[11]== 1) {
+        printf("後ろに移動\n");
+        moveBack(1);
+        attack5();
+    } else if (z2[4] == 1||z2[10] == 1) {
+        printf("視点左\n");
+        pushKey("h");
+        attack5();
+    } else if (z2[1] == 1||z2[7] ==1) {
+        printf("視点右\n");
+        pushKey("k");
+        attack5();
+    } else if (z2[3] == 1||z2[9] == 1){
+        printf("視点左\n");
+        pushKey("h");
+        attack5();
+    } else if(z2[0] == 1||z2[6] == 1){
+        printf("視点右\n");
+        pushKey("k");
+        attack5();
     }
-    return cnt3;
 }
 
 int notz1(int z1[],int cnt3){   // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
@@ -169,57 +209,6 @@ int notz2(long int z2[],int cnt3){   // 画面内にゾンビがいない間、�
     return cnt3;
 }
 
-void z1judge(int z1[]){ 
-    int i;
-    zombie1(z1);
-    if (z1[4] == 1) {
-    } else if (z1[3] == 1) {
-        printf("後ろに移動\n");
-        moveBack(1);
-        attack5();
-    } else if (z1[5] == 1) {
-        printf("後ろに移動\n");
-        moveBack(1);
-        attack5();
-    } else if (z1[0] == 1) {
-        printf("視点左\n");
-        pushKey("h");
-    } else if (z1[2] == 1) {
-        printf("視点右\n");
-        pushKey("k");
-    } 
-}
-
-void z2judge(long int z2[]){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11 左上 12,13,14 中央   遠い←→近い
-    int i;
-    zombie2(z2);
-    if (z2[13]==1||z2[14]==1||z2[12]==1) {
-        printf("後ろに移動\n");
-        moveBack(0.7);
-        attack5();
-    } else if (z2[2] == 1||z2[5] == 1||z2[8] == 1||z2[11]== 1) {
-        printf("後ろに移動\n");
-        moveBack(1);
-        attack5();
-    } else if (z2[4] == 1||z2[10] == 1) {
-        printf("視点左\n");
-        pushKey("h");
-        attack5();
-    } else if (z2[1] == 1||z2[7] ==1) {
-        printf("視点右\n");
-        pushKey("k");
-        attack5();
-    } else if (z2[3] == 1||z2[9] == 1){
-        printf("視点左\n");
-        pushKey("h");
-        attack5();
-    } else if(z2[0] == 1||z2[6] == 1){
-        printf("視点右\n");
-        pushKey("k");
-        attack5();
-    }
-}
-
 int attackz1(int z1[],int cnt3){  // 中央にゾンビがいる間、攻撃する。
     int flag=0;
     int cnt2=1;
@@ -268,6 +257,17 @@ int attackz2(long int z2[],int cnt3){  // 中央にゾンビがいる間、攻�
     attackLeft();
     cnt2++;
     cnt3++;
+    }
+    return cnt3;
+}
+
+int reset(int cnt3){   // 子どもゾンビ用に視点を調整
+    if (cnt3 > 20) {cnt3 = 0;}
+    if (cnt3 == 0) { 
+        printf("視点リセット\n");
+        pushKey("c"); 
+        pushKey("j");
+        cnt3++;
     }
     return cnt3;
 }
