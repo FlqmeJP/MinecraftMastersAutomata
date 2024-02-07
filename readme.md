@@ -1,3 +1,3 @@
-#MinecraftMastersAutomata
+# MinecraftMastersAutomata
 
-共同開発したスクリプトを保管するリポジトリー
+## 共同開発したスクリプトを保管するリポジトリー
