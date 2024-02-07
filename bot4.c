@@ -297,7 +297,6 @@ int main(int argc, char *argv[]) {
         cnt3 = reset(cnt3);
         z2judge(z2);
         cnt3 = notz2(z2,cnt3);  // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
-        cnt3 = attackz2(z2,cnt3); // 中央にゾンビがいる間、攻撃する。
         sleep(0.1);
     }
     setCreative(); // クリエイティブモードにする．
@@ -314,7 +313,7 @@ int main(int argc, char *argv[]) {
 
 ・キーボード＆マウス
 フルキーボードゲームプレイ　オン
-スムース回転スピード 12
+スムース回転スピード 15
 中心を見る C
 スムースに下を見る J
 スムースに右を見る K
