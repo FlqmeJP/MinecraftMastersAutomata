@@ -209,7 +209,13 @@ void z2judge(long int z2[]){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11
         printf("視点右\n");
         pushKey("k");
         attack5();
-    } else if (z2[0] == 1||z2[3] == 1||z2[6] == 1||z2[9] == 1){
+    } else if (z2[3] == 1||z2[9] == 1){
+        printf("視点左\n");
+        pushKey("h");
+        attack5();
+    } else if(z2[0] == 1||z2[6] == 1){
+        printf("視点右\n");
+        pushKey("k");
         attack5();
     }
 }
@@ -303,7 +309,7 @@ int main(int argc, char *argv[]) {
 難易度　イージー
 即時リスポーン オン
 持ち物の保持　オン
-モブのスポーン オフ
+モブのスポーン オン
 自然再生　オン
 
 ・キーボード＆マウス
