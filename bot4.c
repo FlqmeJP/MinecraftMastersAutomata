@@ -124,15 +124,15 @@ void z2judge(long int z2[]){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11
         printf("視点右\n");
         pushKey("k");
         attack5();
-    } else if (z2[3] == 1||z2[9] == 1){
-        printf("視点左\n");
-        pushKey("h");
-        attack5();
     } else if(z2[0] == 1||z2[6] == 1){
         printf("視点右\n");
         pushKey("k");
         attack5();
-    }
+    } else if (z2[3] == 1||z2[9] == 1){
+        printf("視点左\n");
+        pushKey("h");
+        attack5();
+    } 
 }
 
 int notz1(int z1[],int cnt3){   // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
@@ -157,11 +157,16 @@ int notz1(int z1[],int cnt3){   // 画面内にゾンビがいない間、視点
         flag = zombie1(z1);
         if (flag == 1) {
             printf("ダッシュ\n");
-            moveDash(3);
+            moveDash(2);
             flag = zombie1(z1);
             if (flag == 1) {
                 printf("ダッシュ\n");
-                moveDash(2.5);
+                moveDash(2);
+                flag = zombie1(z1);
+                if (flag == 1) {
+                    printf("ダッシュ\n");
+                    moveDash(2);
+                }
             }
         }
         
@@ -277,7 +282,7 @@ void attack5(void){
     printf("攻撃*5\n");
     for(i=0;i<5;i++){
         attackLeft();
-        if(i==2){moveBack(0.7);}
+        if(i==1){moveBack(0.7);}
     }
 }
 
@@ -294,7 +299,7 @@ int main(int argc, char *argv[]) {
     setSurvival(); // サバイバルモードにする．
 
     while (rk) { // 無限loopする．rkはF12キーを押すと0となり，プログラムが停止します．
-        cnt3 = reset(cnt3);    //画面をリセットする
+        cnt3 = reset(cnt3); //画面をリセットする
         z2judge(z2);    //ゾンビを検出し、画面の移動と攻撃をする。
         cnt3 = notz2(z2,cnt3);  // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
         sleep(0.1);
