@@ -3,8 +3,8 @@ import threading
 from pynput.mouse import Controller, Button
 from pynput.keyboard import Listener, KeyCode, Controller as KeyboardController
 
-TOGGLE_KEY = KeyCode(char="t")
-QUICK_ATTACK_KEY = KeyCode(char="q")
+TOGGLE_KEY = KeyCode(char="t")　# プログラムの有効、無効を設定
+QUICK_ATTACK_KEY = KeyCode(char="q") # 攻撃するキー
 
 clicking = False
 mouse = Controller()
