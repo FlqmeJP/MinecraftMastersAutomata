@@ -6,8 +6,8 @@ int zombie1(int z1[]);
 int zombie2(long int z2[]);
 void z1print(int z1[]);
 void z2print(long int z2[]);
-void z1judge(int z1[]);
-void z2judge(long int z2[]);
+int z1judge(int z1[],int cnt3);
+int z2judge(long int z2[],int cnt3);
 int notz1(int z1[],int cnt3);
 int notz2(long int z2[],int cnt3);
 int attackz1(int z1[],int cnt3);
@@ -85,7 +85,7 @@ void z2print(long int z2[]){
     printf("\n");
 }
 
-void z1judge(int z1[]){ 
+int z1judge(int z1[],int cnt3){ 
     int i;
     zombie1(z1);
     if (z1[4] == 1) {
@@ -103,10 +103,12 @@ void z1judge(int z1[]){
     } else if (z1[2] == 1) {
         printf("視点右\n");
         pushKey("k");
-    } 
+    }
+    cnt3++;
+    return cnt3;
 }
 
-void z2judge(long int z2[]){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11 左上 12,13,14 中央   遠い←→近い
+int z2judge(long int z2[],int cnt3){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11 左上 12,13,14 中央   遠い←→近い
     int i;
     zombie2(z2);
     if (z2[13]==1||z2[14]==1||z2[12]==1) {
@@ -134,6 +136,8 @@ void z2judge(long int z2[]){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11
         pushKey("h");
         attack5();
     } 
+    cnt3++;
+    return cnt3;
 }
 
 int notz1(int z1[],int cnt3){   // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
@@ -315,7 +319,7 @@ int main(int argc, char *argv[]) {
 
     while (rk) { // 無限loopする．rkはF12キーを押すと0となり，プログラムが停止します．
         cnt3 = reset(cnt3); //画面をリセットする
-        z2judge(z2);    //ゾンビを検出し、画面の移動と攻撃をする。
+        cnt3 = z2judge(z2,cnt3);    //ゾンビを検出し、画面の移動と攻撃をする。
         cnt3 = notz2(z2,cnt3);  // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
         sleep(0.1);
     }
