@@ -308,7 +308,7 @@ int main(int argc, char *argv[]) {
 
 ・キーボード＆マウス
 フルキーボードゲームプレイ　オン
-スムース回転スピード 10
+スムース回転スピード 12
 中心を見る C
 スムースに下を見る J
 スムースに右を見る K
@@ -328,6 +328,7 @@ int main(int argc, char *argv[]) {
 視野　70度
 手ぶれ　オフ
 画面の揺れ　オフ
-
+雲を表示する オフ
+美しい空 オフ
 MINECRAFT_CONTEST/python/minecraft/pushKey.py sleep_time = 0.05
 */
