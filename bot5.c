@@ -277,7 +277,7 @@ int attackz2(long int z2[],int cnt3){  // 中央にゾンビがいる間、攻�
 }
 
 int reset(int cnt3){   // 子どもゾンビ用に視点を調整
-    if (cnt3 > 20) {cnt3 = 0;}
+    if (cnt3 > 10) {cnt3 = 0;}
     if (cnt3 == 0) { 
         printf("視点リセット\n");
         pushKey("c"); 
