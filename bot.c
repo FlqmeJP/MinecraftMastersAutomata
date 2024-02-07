@@ -294,8 +294,8 @@ int main(int argc, char *argv[]) {
     setSurvival(); // サバイバルモードにする．
 
     while (rk) { // 無限loopする．rkはF12キーを押すと0となり，プログラムが停止します．
-        cnt3 = reset(cnt3);
-        z2judge(z2);
+        cnt3 = reset(cnt3); //画面をリセットする
+        z2judge(z2);    //ゾンビを検出し、画面の移動と攻撃をする。
         cnt3 = notz2(z2,cnt3);  // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
         sleep(0.1);
     }
