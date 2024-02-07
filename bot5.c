@@ -200,11 +200,16 @@ int notz2(long int z2[],int cnt3){   // 画面内にゾンビがいない間、�
         flag = zombie2(z2);
         if (flag == 1) {
             printf("ダッシュ\n");
-            moveDash(3);
+            moveDash(2);
             flag = zombie2(z2);
             if (flag == 1) {
                 printf("ダッシュ\n");
-                moveDash(2.5);
+                moveDash(2);
+                flag = zombie2(z2);
+                if (flag == 1) {
+                    printf("ダッシュ\n");
+                    moveDash(2);
+                }
             }
         }
         
