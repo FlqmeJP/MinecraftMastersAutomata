@@ -3,7 +3,7 @@ import pydirectinput
 import time
 
 ################################
-sleep_time = 0.005
+sleep_time = 0.01
 ################################
 
 def clickLeft_long():
