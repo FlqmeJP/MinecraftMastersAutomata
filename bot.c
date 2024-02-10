@@ -56,63 +56,73 @@ void z2print(long int z2[]){
 int z2judge(long int z2[],int cnt3){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11 左上 12,13,14 中央   遠い←→近い
     int i;
     zombie2(z2);
-    if (z2[13]==1||z2[14]==1) {
-        printf("後ろに移動\n");
+    if (z2[13]==1||z2[14]==1) { //中央近・中
         moveBack(0.5);
         attack1();
-    } else if (z2[5] == 1||z2[11]== 1) {
+    } else if (z2[5] == 1||z2[11]== 1) {    //左下近・左上近
         printf("後ろに移動\n");
         moveBack(0.3);
         printf("視点左\n");
         pushKey("h");
         attack1();
-    } else if (z2[2] == 1||z2[8] == 1){
+    } else if (z2[2] == 1||z2[8] == 1) {    //右下近・右上近 
         printf("後ろに移動\n");
         moveBack(0.3);
         printf("視点右\n");
         pushKey("k");
         attack1();
-    } else if (z2[4] == 1||z2[10] == 1) {
+    } else if (z2[4] == 1||z2[10] == 1) {   //左下中・左上中
         printf("視点左\n");
         pushKey("h");
         attack1();
-    } else if (z2[1] == 1||z2[7] ==1) {
+    } else if (z2[1] == 1||z2[7] ==1) {     //右下中・右上中
         printf("視点右\n");
         pushKey("k");
         attack1();
-    } else if (z2[3] == 1||z2[9] == 1){
+    } else if (z2[3] == 1) {    //左下遠
         printf("視点左\n");
         pushKey("h");
+        pushKey("h");
         attack1();
-    } else if(z2[0] == 1 || z2[6] == 1){
+    } else if (z2[0] == 1){    //右下遠
         printf("視点右\n");
         pushKey("k");
+        pushKey("k");
         attack1();
-    } else if (z2[12]==1){
+    } else if (z2[9] == 1){    //左上遠
         printf("ダッシュ\n");
-        moveDash(1);
+        moveDash(0.8);
+        printf("視点左\n");
+        pushKey("h");
+        attack1();
+    } else if (z2[6] == 1){    //右上遠
+        printf("ダッシュ\n");
+        moveDash(0.8);
+        printf("視点右\n");
+        pushKey("k");
+        attack1();
+    } else if (z2[12] == 1){    //中央遠
+        attack1();
     }
     cnt3++;
     return cnt3;
 }
 
 
-int notz2(long int z2[],int cnt3){   // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
+int notz2(long int z2[],int cnt3){   // 画面内にゾンビがいない間、視点を右に移動させ、前に移動する。
     int flag = 1;
     int a,i;
     int cnt1 = 1;
     flag = zombie2(z2);
     while (rk != 0 && flag == 1) { 
+        printf("ダッシュ\n");
+        moveDash(2);
         flag = zombie2(z2);
         if (flag == 1) {
             printf("ダッシュ\n");
             moveDash(2);
-            flag = zombie2(z2);
-            if (flag == 1) {
-                printf("ダッシュ\n");
-                moveDash(2);
-            }
         }
+        
         flag = zombie2(z2);
         if (flag == 1) {
             printf("視点右\n");
@@ -135,7 +145,6 @@ int reset(int cnt3){   // 子どもゾンビ用に視点を調整
     if (cnt3 == 0) { 
         printf("視点リセット\n");
         pushKey("c"); 
-        //pushKey("j");
         cnt3++;
     }
     return cnt3;
@@ -143,16 +152,14 @@ int reset(int cnt3){   // 子どもゾンビ用に視点を調整
 
 void attack1(void){
     int i;
-    printf("攻撃*8\n");
+    printf("攻撃*10\n");
         moveBack(0.5);
         attackLeft_long();
     
 }
 
 int main(int argc, char *argv[]) {
-    int a;     // detectZombie1から値を受け取る
     long int b; // detectZombie2から値を受け取る
-    int z1[7];  // aの値を配列に入れる
     long int z2[15];    //bの値を配列に入れる
     int cnt3 = 0;   //視点リセット用
 
@@ -197,7 +204,7 @@ int main(int argc, char *argv[]) {
 ・ビデオ
 明るさ 100
 カメラ視点　一人称
-手の表示　オフ
+手の非表示　オン
 視野　60度
 手ぶれ　オフ
 画面の揺れ　オフ
@@ -235,6 +242,12 @@ sleep_time = 0.01
 ################################
 
 def clickLeft_long():
+    pydirectinput.keyDown('q')
+    time.sleep(sleep_time)
+    pydirectinput.keyUp('q')
+    pydirectinput.keyDown('q')
+    time.sleep(sleep_time)
+    pydirectinput.keyUp('q')
     pydirectinput.keyDown('q')
     time.sleep(sleep_time)
     pydirectinput.keyUp('q')
