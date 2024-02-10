@@ -93,14 +93,12 @@ int z2judge(long int z2[],int cnt3){    //0,1,2 右下 3,4,5 左下 6,7,8 右上
         pushKey("h");
         printf("ダッシュ\n");
         dash1();
-        sleep(0.5);
         attack1();
     } else if (z2[6] == 1){    //右上遠
         printf("視点右\n");
         pushKey("k");
         printf("ダッシュ\n");
         dash1();
-        sleep(0.5);
         attack1();
     }
     cnt3++;
