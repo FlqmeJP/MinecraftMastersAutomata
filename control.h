@@ -3,6 +3,8 @@ extern int rk;
 void attackLeft(void);
 void attackLeft_long(void);
 void attackRight(void);
+void dash1(void);
+void dash2(void);
 
 void moveDataToFile(char* key);
 void initMoveDataFile(void);
@@ -43,6 +45,8 @@ void killPython(void);
 int detectZombie1(void);
 long detectZombie2(void);
 int detectZombie3(void);
+int detectSkeleton(void);
 int detectMobsArray(int mode , int ibuf[]);
 int detectMobs(void);
 void exePython(void);
+
