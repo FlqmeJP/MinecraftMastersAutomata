@@ -57,8 +57,6 @@ int z2judge(long int z2[],int cnt3){    //0,1,2 右下 3,4,5 左下 6,7,8 右上
     int i;
     zombie2(z2);
     if (z2[13]==1||z2[14]==1) { //中央近・中
-        printf("後ろに移動\n");
-        moveBack(0.5);
         attack1();
     } else if (z2[5] == 1||z2[11]== 1) {    //左下近・左上近
         printf("後ろに移動\n");
@@ -82,19 +80,17 @@ int z2judge(long int z2[],int cnt3){    //0,1,2 右下 3,4,5 左下 6,7,8 右上
         attack1();
     } else if (z2[3] == 1||z2[9] == 1) {    //左下遠・左上遠
         printf("ダッシュ\n");
-        moveDash(1);
+        moveDash(0.5);
         printf("視点左\n");
         pushKey("h");
-        attack1();
     } else if(z2[0] == 1 || z2[6] == 1){    //右下遠・右上遠
         printf("ダッシュ\n");
-        moveDash(1);
+        moveDash(0.5);
         printf("視点右\n");
         pushKey("k");
-        attack1();
     } else if (z2[12]==1){      //中央遠
         printf("ダッシュ\n");
-        moveDash(1);
+        moveDash(0.5);
     }
     cnt3++;
     return cnt3;
