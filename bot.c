@@ -152,7 +152,6 @@ int reset(int cnt3){   // 子どもゾンビ用に視点を調整
 void attack1(void){
     int i;
     printf("攻撃*10\n");
-    moveBack(0.5);
     attackLeft_long();
 }
 
