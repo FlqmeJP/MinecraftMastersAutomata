@@ -5,7 +5,7 @@ import time
 import sys
 
 ################################
-sleep_time = 0.50
+sleep_time = 0.05
 ################################
 
 def pushKey(key):
