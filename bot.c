@@ -57,7 +57,6 @@ int z2judge(long int z2[],int cnt3){    //0,1,2 右下 3,4,5 左下 6,7,8 右上
     int i;
     zombie2(z2);
     if (z2[13]==1||z2[14]==1) { //中央近・中
-        moveBack(0.5);
         attack1();
     } else if (z2[5] == 1||z2[11]== 1) {    //左下近・左上近
         printf("後ろに移動\n");
