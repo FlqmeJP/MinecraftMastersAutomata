@@ -82,11 +82,9 @@ int z2judge(long int z2[],int cnt3){    //0,1,2 右下 3,4,5 左下 6,7,8 右上
     } else if (z2[3] == 1) {    //左下遠
         printf("視点左\n");
         pushKey("h");
-        pushKey("h");
         attack1();
     } else if (z2[0] == 1){    //右下遠
         printf("視点右\n");
-        pushKey("k");
         pushKey("k");
         attack1();
     } else if (z2[12] == 1){    //中央遠
@@ -206,7 +204,7 @@ int main(int argc, char *argv[]) {
 攻撃する Q
 移動 AWSD
 コマンドライン /
-ダッシュ CTRL
+ダッシュ Z
 
 ・ビデオ
 明るさ 100
