@@ -57,7 +57,6 @@ int z2judge(long int z2[],int cnt3){    //0,1,2 右下 3,4,5 左下 6,7,8 右上
     int i;
     zombie2(z2);
     if (z2[13]==1||z2[14]==1) { //中央近・中
-        moveBack(0.5);
         attack1();
     } else if (z2[5] == 1||z2[11]== 1) {    //左下近・左上近
         printf("後ろに移動\n");
@@ -82,27 +81,19 @@ int z2judge(long int z2[],int cnt3){    //0,1,2 右下 3,4,5 左下 6,7,8 右上
     } else if (z2[3] == 1) {    //左下遠
         printf("視点左\n");
         pushKey("h");
-        pushKey("h");
         attack1();
     } else if (z2[0] == 1){    //右下遠
         printf("視点右\n");
-        pushKey("k");
         pushKey("k");
         attack1();
     } else if (z2[12] == 1){    //中央遠
         attack1();
     } else if (z2[9] == 1){    //左上遠
         printf("ダッシュ\n");
-        moveDash(0.8);
-        printf("視点左\n");
-        pushKey("h");
-        attack1();
+        dash1();
     } else if (z2[6] == 1){    //右上遠
         printf("ダッシュ\n");
-        moveDash(0.8);
-        printf("視点右\n");
-        pushKey("k");
-        attack1();
+        dash1();
     }
     cnt3++;
     return cnt3;
@@ -115,17 +106,22 @@ int notz2(long int z2[],int cnt3){   // 画面内にゾンビがいない間、�
     int cnt1 = 1;
     while (rk != 0 && flag == 1) { 
         printf("ダッシュ\n");
-        moveDash(2);
+        dash2();
         flag = zombie2(z2);
         if (flag == 1) {
             printf("ダッシュ\n");
-            moveDash(2);
+            dash2();
         }
         
         flag = zombie2(z2);
         if (flag == 1) {
             printf("視点右\n");
             pushKey("l");
+        }
+        flag = zombie2(z2);
+        if (flag == 1) {
+            printf("視点右\n");
+            pushKey("k");
         }
         flag = zombie2(z2);
         if (flag == 1) {
@@ -140,7 +136,6 @@ int notz2(long int z2[],int cnt3){   // 画面内にゾンビがいない間、�
 }
 
 int reset(int cnt3){   // 子どもゾンビ用に視点を調整
-    if (cnt3 > 10) {cnt3 = 0;}
     if (cnt3 == 0) { 
         printf("視点リセット\n");
         pushKey("c"); 
@@ -168,9 +163,9 @@ int main(int argc, char *argv[]) {
 
     while (rk) { // 無限loopする．rkはF12キーを押すと0となり，プログラムが停止します．
         cnt3 = reset(cnt3); //画面をリセットする
-        cnt3 = z2judge(z2,cnt3);    //ゾンビを検出し、画面の移動と攻撃をする。
+        z2judge(z2,cnt3);    //ゾンビを検出し、画面の移動と攻撃をする。
         flag = zombie2(z2);
-        if(flag==1){cnt3 = notz2(z2,cnt3);}  // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
+        if(flag==1){notz2(z2,cnt3);}  // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
         sleep(0.1);
     }
     setCreative(); // クリエイティブモードにする．
@@ -199,7 +194,7 @@ int main(int argc, char *argv[]) {
 攻撃する Q
 移動 AWSD
 コマンドライン /
-ダッシュ CTRL
+ダッシュ Z
 
 ・ビデオ
 明るさ 100
@@ -212,68 +207,9 @@ int main(int argc, char *argv[]) {
 美しい空 オフ
 
 MINECRAFT_CONTEST/python/minecraft/pushKey.py 
-import pydirectinput
-
-import time
-
-import sys
-
-################################
-sleep_time = 0.05
-################################
-
-def pushKey(key):
-    pydirectinput.keyDown(key)
-    time.sleep(sleep_time)
-    pydirectinput.keyUp(key)
-
-if __name__ == '__main__':
-    pushKey(sys.argv[1])
-
-----------------------------------------------------------
-
 MINECRAFT_CONTEST/python/minecraft/clickLeft_Long.py
-import pydirectinput
-
-import time
-
-################################
-sleep_time = 0.01
-################################
-
-def clickLeft_long():
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-    pydirectinput.keyDown('q')
-    time.sleep(sleep_time)
-    pydirectinput.keyUp('q')
-
-if __name__ == '__main__':
-    clickLeft_long()
+MINECRAFT_CONTEST/python/minecraft/moveDash1.py
+MINECRAFT_CONTEST/python/minecraft/moveDash2.py
+MINECRAFT_CONTEST/control.c
 */
 
