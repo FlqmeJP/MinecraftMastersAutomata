@@ -252,6 +252,7 @@ MINECRAFT_CONTEST/python/minecraft/pushKey.py
 MINECRAFT_CONTEST/python/minecraft/clickLeft_Long.py
 MINECRAFT_CONTEST/python/minecraft/moveDash1.py
 MINECRAFT_CONTEST/python/minecraft/moveDash2.py
+MINECRAFT_CONTEST/python/minecraft/eat.py
 MINECRAFT_CONTEST/control.c
 */
 
