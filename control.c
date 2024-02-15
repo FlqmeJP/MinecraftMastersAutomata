@@ -53,6 +53,14 @@ void dash2(void){
     }
 }
 
+void eat(void){
+    char com[128] = "python/python.exe python/minecraft/eat.py";
+    int f = system(com);
+    if(f != 0 && WEXITSTATUS(f) != 0 ){
+        printf("error:eat\n");
+        exit(1);
+    }
+}
 
 void moveDataToFile(char* key){
     FILE *fp;

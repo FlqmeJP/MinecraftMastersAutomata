@@ -5,6 +5,7 @@ void attackLeft_long(void);
 void attackRight(void);
 void dash1(void);
 void dash2(void);
+void eat(void);
 
 void moveDataToFile(char* key);
 void initMoveDataFile(void);
