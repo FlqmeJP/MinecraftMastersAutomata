@@ -1,0 +1,36 @@
+import time
+import threading
+from pynput.mouse import Controller, Button
+from pynput.keyboard import Listener, KeyCode, Controller as KeyboardController
+
+QUICK_ATTACK_KEY = KeyCode(char="q")  # 攻撃するキー
+EXIT_KEY = KeyCode(char="b")  # 終了するキー
+
+clicking = True  # プログラム開始時に有効にする
+mouse = Controller()
+keyboard = KeyboardController()
+
+def clicker():
+    while True:
+        if clicking:
+            # 必要に応じてキー間の遅延をカスタマイズできます
+            keyboard.press(QUICK_ATTACK_KEY)
+            time.sleep(0.01)  # 必要に応じてこの遅延を調整してください
+            keyboard.release(QUICK_ATTACK_KEY)
+
+def on_key_press(key):
+    global clicking
+    if key == EXIT_KEY:
+        clicking = False
+
+# キーボードイベントのリスナーを作成
+with Listener(on_press=on_key_press) as listener:
+    # クリッカーのスレッドを開始
+    click_thread = threading.Thread(target=clicker)
+    click_thread.start()
+
+    # メインスレッドが終了キーが押されるまで待機
+    listener.join()
+
+# 終了後にクリッカーのスレッドを終了
+click_thread.join()
