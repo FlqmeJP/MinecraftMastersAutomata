@@ -8,6 +8,8 @@
 #include <windows.h>
 #include "control.h"
 #include <pthread.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #define PRINT_HERE \
     fprintf(stderr, "File:%s Line:%d\t", __FILE__, __LINE__)
@@ -18,6 +20,34 @@ pid_t Detect3_pid;
 pid_t Move_pid;
 pid_t Camera_pid;
 int rk=1;
+
+void attack(void){
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) {
+        // 子プロセス
+        execlp("python/python.exe", "python/python.exe", "python/minecraft/attack.py", NULL);
+        perror("execlp");
+        exit(EXIT_FAILURE);
+    } else {
+        // 親プロセス
+        int status;
+        if (waitpid(pid, &status, 0) == -1) {
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+            printf("error:attack\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
 
 void attackLeft(void){
     char com[128] = "python/python.exe python/minecraft/clickLeft.py";
@@ -58,6 +88,15 @@ void eat(void){
     int f = system(com);
     if(f != 0 && WEXITSTATUS(f) != 0 ){
         printf("error:eat\n");
+        exit(1);
+    }
+}
+
+void jumpAttack(void){
+    char com[128] = "python/python.exe python/minecraft/jumpattack.py";
+    int f = system(com);
+    if(f != 0 && WEXITSTATUS(f) != 0 ){
+        printf("error:jumpAttack\n");
         exit(1);
     }
 }
