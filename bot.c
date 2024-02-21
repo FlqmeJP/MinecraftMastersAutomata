@@ -17,7 +17,7 @@ void attack2(void);
 int zombie2(long int z2[]){
     long int b;
     int i;
-    long int k=1;
+    long int k = 1;
     int flag = 0;
     b = detectZombie2();
     printf("%015ld\n", b);
@@ -31,7 +31,7 @@ int zombie2(long int z2[]){
     for(i = 0; i < 15 ; i++) {
         if(z2[i] != 0) {
             if(z2[i] != 1) {
-                flag=1;
+                flag = 1;
             }
         }
     }
@@ -55,7 +55,7 @@ int zombie3(int z3[]){
 }
 
 int skeleton(int s[]){
-    int c,i,k=1;
+    int c,i,k = 1;
     int flag = 0;
     c = detectSkeleton();
     printf("%06d\n", c);
@@ -167,38 +167,44 @@ int notmob(long int z2[],int z3[],int s[],int cnt){   // 画面内にゾンビ�
         printf("ダッシュ\n");
         dash1();
         flag = zombie2(z2);
-        flag2 = skeleton(s);
+        flag2 = zombie3(z3);
+        flag3 = skeleton(s);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("ダッシュ\n");
             dash1();
         }
         flag = zombie2(z2);
-        flag2 = skeleton(s);
+        flag2 = zombie3(z3);
+        flag3 = skeleton(s);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("ダッシュ\n");
             dash1();
         }
         
         flag = zombie2(z2);
-        flag2 = skeleton(s);
+        flag2 = zombie3(z3);
+        flag3 = skeleton(s);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("視点右\n");
             pushKey("l");
         }
         flag = zombie2(z2);
-        flag2 = skeleton(s);
+        flag2 = zombie3(z3);
+        flag3 = skeleton(s);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("視点右\n");
             pushKey("k");
         }
         flag = zombie2(z2);
-        flag2 = skeleton(s);
+        flag2 = zombie3(z3);
+        flag3 = skeleton(s);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("視点右\n");
             pushKey("k");
         }
         flag = zombie2(z2);
-        flag2 = skeleton(s);
+        flag2 = zombie3(z3);
+        flag3 = skeleton(s);
         cnt++;
     }
     return cnt;
