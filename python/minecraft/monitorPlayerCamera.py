@@ -3,22 +3,22 @@ import sys
 import time
 
 def left(sleep_time):
-    pydirectinput.keyDown('left')
+    pydirectinput.keyDown('h')
     #time.sleep(sleep_time)
     #pydirectinput.keyUp('left')
 
 def right(sleep_time):
-    pydirectinput.keyDown('right')
+    pydirectinput.keyDown('k')
     #time.sleep(sleep_time)
     #pydirectinput.keyUp('right')
 
 def up(sleep_time):
-    pydirectinput.keyDown('up')
+    pydirectinput.keyDown('u')
     #time.sleep(sleep_time)
     #pydirectinput.keyUp('up')
 
 def down(sleep_time):
-    pydirectinput.keyDown('down')
+    pydirectinput.keyDown('j')
     #time.sleep(sleep_time)
     #pydirectinput.keyUp('down')
 
@@ -28,10 +28,10 @@ def center():
     pydirectinput.keyUp('End')
 
 def keyRelese():
-    pydirectinput.keyUp('left')
-    pydirectinput.keyUp('right')
-    pydirectinput.keyUp('up')
-    pydirectinput.keyUp('down')
+    pydirectinput.keyUp('h')
+    pydirectinput.keyUp('k')
+    pydirectinput.keyUp('u')
+    pydirectinput.keyUp('j')
     pydirectinput.keyUp('End')
 
 
