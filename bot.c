@@ -145,11 +145,13 @@ int mobjudge(long int z2[],int z3[],int s[],int cnt){    //0,1,2 右下 3,4,5 �
     } else if (z2[12] == 1){    //中央遠
         attack1();
     } else if (z2[9] == 1){    //左上遠
-        printf("ダッシュ\n");
-        dash1();
+        printf("視点左\n");
+        pushKey("h");
+        attack1();
     } else if (z2[6] == 1){    //右上遠
-        printf("ダッシュ\n");
-        dash1();
+        printf("視点右\n");
+        pushKey("k");
+        attack1();
     }
     cnt++;
     return cnt;
@@ -164,20 +166,20 @@ int notmob(long int z2[],int z3[],int s[],int cnt){   // 画面内にゾンビ�
     flag2 = zombie3(z3);
     flag3 = skeleton(s);
     while (rk != 0 && flag == 1 && flag2 == 1 && flag3 == 1) { 
-        printf("ダッシュ\n");
+        printf("ダッシュ1\n");
         dash1();
         flag = zombie2(z2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
-            printf("ダッシュ\n");
+            printf("ダッシュ2\n");
             dash1();
         }
         flag = zombie2(z2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
-            printf("ダッシュ\n");
+            printf("ダッシュ3\n");
             dash1();
         }
         
@@ -216,9 +218,9 @@ int reset(int cnt){   // 視点を調整
         pushKey("c"); 
         cnt++;
     }
-    if (cnt % 20 == 0){
+    /*if (cnt % 20 == 0){
         eat();
-    }
+    }*/
     return cnt;
 }
 
