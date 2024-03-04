@@ -1,0 +1,12 @@
+key,dash_flag
+B,0
+Wait,0
+B,0
+Wait,0
+B,0
+Wait,0
+B,0
+Wait,0
+B,0
+Wait,0
+B,0
