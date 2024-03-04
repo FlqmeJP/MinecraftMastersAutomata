@@ -8,9 +8,11 @@
 #include <windows.h>
 #include "control.h"
 #include <pthread.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #define PRINT_HERE \
-   fprintf(stderr, "File:%s Line:%d\t", __FILE__, __LINE__)
+    fprintf(stderr, "File:%s Line:%d\t", __FILE__, __LINE__)
 
 pid_t Detect1_pid;
 pid_t Detect2_pid;
@@ -18,6 +20,34 @@ pid_t Detect3_pid;
 pid_t Move_pid;
 pid_t Camera_pid;
 int rk=1;
+
+void attack(void){
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) {
+        // 子プロセス
+        execlp("python/python.exe", "python/python.exe", "python/minecraft/attack.py", NULL);
+        perror("execlp");
+        exit(EXIT_FAILURE);
+    } else {
+        // 親プロセス
+        int status;
+        if (waitpid(pid, &status, 0) == -1) {
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+            printf("error:attack\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
 
 void attackLeft(void){
     char com[128] = "python/python.exe python/minecraft/clickLeft.py";
@@ -28,10 +58,64 @@ void attackLeft(void){
     }
 }
 void attackLeft_long(void){
-    char com[128] = "python/python.exe python/minecraft/clickLeft_long.py";
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) {
+        // 子プロセス
+        execlp("python/python.exe", "python/python.exe", "python/minecraft/clickLeft_long.py", NULL);
+        perror("execlp");
+        exit(EXIT_FAILURE);
+    } else {
+        // 親プロセス
+        int status;
+        if (waitpid(pid, &status, 0) == -1) {
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+            printf("error:attack\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
+void dash1(void){
+    char com[128] = "python/python.exe python/minecraft/moveDash1.py";
     int f = system(com);
     if(f != 0 && WEXITSTATUS(f) != 0 ){
-        printf("error:attackLefy_long\n");
+        printf("error:dash\n");
+        exit(1);
+    }
+}
+void dash2(void){
+    char com[128] = "python/python.exe python/minecraft/moveDash2.py";
+    int f = system(com);
+    if(f != 0 && WEXITSTATUS(f) != 0 ){
+        printf("error:dash\n");
+        exit(1);
+    }
+}
+
+void eat(void){
+    char com[128] = "python/python.exe python/minecraft/eat.py";
+    int f = system(com);
+    if(f != 0 && WEXITSTATUS(f) != 0 ){
+        printf("error:eat\n");
+        exit(1);
+    }
+}
+
+void jumpAttack(void){
+    char com[128] = "python/python.exe python/minecraft/jumpattack.py";
+    int f = system(com);
+    if(f != 0 && WEXITSTATUS(f) != 0 ){
+        printf("error:jumpAttack\n");
         exit(1);
     }
 }
@@ -42,7 +126,7 @@ void moveDataToFile(char* key){
     char buf[32]="";
     const char* const sep = ",";
     char *data;
-    
+
     // Share_Move_Data.txtの内容をbufに保存する
 
     if((fp=fopen(pass, "r"))==NULL){
@@ -76,7 +160,7 @@ void cameraDataToFile(char* key, double sleep_time){
     char pass[64] = "python/tmp/Share_Camera_Data.txt";
     char buf[32]="";
     char *data;
-    
+
     if((fp=fopen(pass, "r"))==NULL){
         printf("error：Share_Camera_Data.txtをrモードで開けませんでした．\n");
         exit(1);
@@ -104,15 +188,15 @@ void moveForward(double sleep_time){
     char key[32]  ="F";
     moveDataToFile(key);
     Sleep(sleep_time * 1000);
-    initMoveDataFile();  
-    //usleep(0.15*1000000);  
+    initMoveDataFile();
+    //usleep(0.15*1000000);
 }
 
 void moveLeft(double sleep_time){
     char key[32]  ="L";
     moveDataToFile(key);
     Sleep(sleep_time * 1000);
-    initMoveDataFile();  
+    initMoveDataFile();
     //usleep(0.15*1000000);
 }
 
@@ -120,15 +204,15 @@ void moveRight(double sleep_time){
     char key[32]  ="R";
     moveDataToFile(key);
     Sleep(sleep_time * 1000);
-    initMoveDataFile(); 
-    //usleep(0.15*1000000);  
+    initMoveDataFile();
+    //usleep(0.15*1000000);
 }
 
 void moveBack(double sleep_time){
     char key[32]  ="B";
     moveDataToFile(key);
     Sleep(sleep_time * 1000);
-    initMoveDataFile(); 
+    initMoveDataFile();
     //usleep(0.15*1000000);
 }
 
@@ -212,7 +296,7 @@ void setDashFlag(int flag){
         exit(1);
     }else{
         data = strtok(buf, sep);
-        
+
         fprintf(fp, "%s,", data);
         fprintf(fp, "%d", flag);
     }
@@ -393,7 +477,7 @@ long detectZombie2(void){
 
 int detectZombie3(void) {
     FILE	*fp;
-	char	fname[] = "python/tmp/detect_zombie3.txt";
+	char	fname[] = "python/minecraft/yoloFiles/labels/capture.txt";
     int i, t=1;
     int zbuf=0;
 
@@ -405,7 +489,36 @@ int detectZombie3(void) {
 	char buf[256];
 	fgets(buf, sizeof(buf), fp);
 	(void) fclose(fp);
-    
+
+    for(i=0;i<6;i++){
+        zbuf = zbuf + ((buf[5 - i] - '0') * t);
+        t = t * 10;
+    }
+
+    if(zbuf < 0) {
+        return 0;
+    }
+
+    return zbuf;
+}
+
+int detectSkeleton(void) {
+    FILE	*fp;
+	char	fname[] = "python/minecraft/yoloFiles/labels/capture.txt";
+    int i, t=1;
+    int zbuf=0;
+
+	if ( (fp=fopen(fname,"r")) ==NULL) {
+		printf("error:detectSkeleton3\n");
+        killPython();
+		exit(1);
+	}
+	char buf[256];
+	char tmp[256];
+	fgets(tmp, sizeof(buf), fp);
+	fgets(buf, sizeof(buf), fp);
+	(void) fclose(fp);
+
     for(i=0;i<6;i++){
         zbuf = zbuf + ((buf[5 - i] - '0') * t);
         t = t * 10;
@@ -419,7 +532,7 @@ int detectZombie3(void) {
 }
 
 int detectMobsArray(int mode , int ibuf[]) {
-    FILE	*fp; 
+    FILE	*fp;
     char	*fname;
     int     i;
 
@@ -442,7 +555,7 @@ int detectMobsArray(int mode , int ibuf[]) {
 	fgets(buf, sizeof(buf), fp);
 	(void) fclose(fp);
     int bufLength = strlen(buf);
-    
+
     for(i=0; i<256; i++){
         ibuf[i] = 0;
     }
@@ -450,7 +563,7 @@ int detectMobsArray(int mode , int ibuf[]) {
     for(i=0;i<bufLength;i++){
         ibuf[i] = buf[i] - '0';
     }
-    
+
     return bufLength;
 }
 
@@ -467,7 +580,7 @@ int detectMobs(void) {
 	char buf[256];
 	fgets(buf, sizeof(buf), fp);
 	(void) fclose(fp);
-    
+
     for(i=0;i<6;i++){
         obuf = obuf + ((buf[5 - i] - '0') * t);
         t = t * 10;
@@ -486,7 +599,7 @@ void killPython(void){
     ret3 = kill(Detect3_pid, SIGKILL);
     ret4 = kill(Move_pid, SIGKILL);
     ret5 = kill(Camera_pid, SIGKILL);
-    
+
     if (ret1 == -1 || ret2 == -1 || ret3 == -1 || ret4 == -1 || ret5 == -1) {
         perror("error:kill");
         printf("error:kill");
@@ -510,7 +623,7 @@ void *isInterrupt(void *args){
 void exePython(void){
     pthread_t key;
     int kill_p ;
-    
+
     Detect1_pid = fork ();
     if (-1 == Detect1_pid){
         err (EXIT_FAILURE, "can not fork");
@@ -523,7 +636,7 @@ void exePython(void){
         }
     }
     Sleep(100);
-    
+
     Detect2_pid = fork ();
     if (-1 == Detect2_pid){
         err (EXIT_FAILURE, "can not fork");
@@ -561,7 +674,7 @@ void exePython(void){
             exit(1);
         }
     }
-    
+
      Sleep(100);
 
     Camera_pid = fork();
