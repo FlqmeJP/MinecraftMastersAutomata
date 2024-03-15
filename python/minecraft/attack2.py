@@ -26,31 +26,35 @@ def clicker():
         
         with click_count_lock:
             click_count += 1
-            if click_count == 10:
+            if click_count == 5:
+                keyboard.press(DOWN_KEY)
+                keyboard.press(BACK_KEY)
+            if click_count == 15:
+                keyboard.release(DOWN_KEY)
                 keyboard.press(RIGHT_KEY)
             if click_count == 30:
+                keyboard.release(RIGHT_KEY)
+            if click_count == 35:
                 keyboard.release(BACK_KEY)
-                keyboard.release(RIGHT_KEY)
                 keyboard.press(LEFT_KEY)
-            if click_count == 70:
+            if click_count == 65:
                 keyboard.release(LEFT_KEY)
+            if click_count == 70:
                 keyboard.press(RIGHT_KEY)
-            if click_count == 90:
+            if click_count == 85:
                 keyboard.release(RIGHT_KEY)
+            if click_count == 95:
+                keyboard.press(UP_KEY)
             if click_count == 100: #カウント回数は任意に決めて
+                keyboard.release(UP_KEY)
                 exit_event.set()  # メインスレッドに終了通知
                 break
 
 click_count_lock = threading.Lock()
 click_thread = threading.Thread(target=clicker)
 click_thread.daemon = True
-keyboard.press(DOWN_KEY)
-time.sleep(0.1)
-keyboard.release(DOWN_KEY)
-keyboard.press(BACK_KEY)
 click_thread.start()
 # メインスレッドが終了通知を受けるまで待機
 exit_event.wait()
-keyboard.press(UP_KEY)
 time.sleep(0.05)
-keyboard.release(UP_KEY)
+
