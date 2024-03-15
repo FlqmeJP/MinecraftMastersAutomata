@@ -11,8 +11,10 @@ void sprint(int s[]);
 int mobjudge(long int z2[],int z3[],int s[],int cnt);
 int notmob(long int z2[],int z3[],int s[],int cnt);
 int reset(int cnt);
-void attack1(void);
-void attack2(void);
+void attack_1(void);
+void attack_2(void);
+void attack_3(void);
+void attack_4(void);
 
 int zombie2(long int z2[]){
     long int b;
@@ -42,6 +44,7 @@ int zombie2(long int z2[]){
 int zombie3(int z3[]){
     int c,i,k = 1;
     int flag = 0;
+    sleep(0.2);
     c = detectZombie3();
     printf("%06d\n", c);
     for (i = 0; i < 6; i++) {
@@ -109,49 +112,45 @@ void sprint(int s[]){
 }
 
 int mobjudge(long int z2[],int z3[],int s[],int cnt){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11 左上 12,13,14 中央   遠い←→近い
-    zombie2(z2);
     zombie3(z3);
     skeleton(s);
+    zombie2(z2);
     if (z2[13] == 1 || z2[14] == 1) { //中央近・中
-        attack1();
+        attack2();
     } else if (z2[5] == 1 || z2[11] == 1 || z3[2] == 1 || s[2] == 1) {    //左下近・左上近
-        printf("後ろに移動\n");
-        moveBack(0.3);
         printf("視点左\n");
         pushKey("h");
-        attack1();
+        attack2();
     } else if (z2[2] == 1 || z2[8] == 1 || z3[3] == 1 || s[3] == 1) {    //右下近・右上近 
-        printf("後ろに移動\n");
-        moveBack(0.3);
         printf("視点右\n");
         pushKey("k");
-        attack1();
+        attack2();
     } else if (z2[4] == 1 || z2[10] == 1 || z3[1] == 1 || s[1] == 1) {   //左下中・左上中
         printf("視点左\n");
         pushKey("h");
-        attack1();
+        attack3();
     } else if (z2[1] == 1 || z2[7] == 1 || z3[4] == 1 || s[4] == 1) {     //右下中・右上中
         printf("視点右\n");
         pushKey("k");
-        attack1();
+        attack3();
     } else if (z2[3] == 1 || z3[0] == 1 || s[0] == 1) {    //左下遠
         printf("視点左\n");
         pushKey("h");
-        attack1();
+        attack3();
     } else if (z2[0] == 1 || z3[5] == 1 || s[5] == 1){    //右下遠
         printf("視点右\n");
         pushKey("k");
-        attack1();
+        attack3();
     } else if (z2[12] == 1){    //中央遠
-        attack2();
+        attack4();
     } else if (z2[9] == 1){    //左上遠
         printf("視点左\n");
         pushKey("h");
-        attack2();
+        attack4();
     } else if (z2[6] == 1){    //右上遠
         printf("視点右\n");
         pushKey("k");
-        attack2();
+        attack4();
     }
     cnt++;
     return cnt;
@@ -162,51 +161,51 @@ int notmob(long int z2[],int z3[],int s[],int cnt){   // 画面内にゾンビ�
     int flag = 1;
     int flag2 = 1;
     int flag3 = 1;
-    flag = zombie2(z2);
     flag2 = zombie3(z3);
     flag3 = skeleton(s);
+    flag = zombie2(z2);
     while (rk != 0 && flag == 1 && flag2 == 1 && flag3 == 1) { 
         printf("ダッシュ1\n");
         dash1();
-        flag = zombie2(z2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
+        flag = zombie2(z2);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("ダッシュ2\n");
             dash1();
         }
-        flag = zombie2(z2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
+        flag = zombie2(z2);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("ダッシュ3\n");
             dash1();
         }
         
-        flag = zombie2(z2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
+        flag = zombie2(z2);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("視点右\n");
             pushKey("l");
         }
-        flag = zombie2(z2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
+        flag = zombie2(z2);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("視点右\n");
             pushKey("k");
         }
-        flag = zombie2(z2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
+        flag = zombie2(z2);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("視点右\n");
             pushKey("k");
         }
-        flag = zombie2(z2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
+        flag = zombie2(z2);
         cnt++;
     }
     return cnt;
@@ -218,20 +217,30 @@ int reset(int cnt){   // 視点を調整
         pushKey("c"); 
         cnt++;
     }
-    /*if (cnt % 20 == 0){
+    if (cnt % 20 == 0){
         eat();
-    }*/
+    }
     return cnt;
 }
 
-void attack2(void){
-    printf("攻撃\n");
-    attackLeft_long();
-}
-
-void attack1(void){
+void attack_1(void){
     printf("攻撃\n");
     attack();
+}
+
+void attack_2(void){ //左右に画面を動かしながら攻撃
+    printf("攻撃\n");
+    attack2();
+}
+
+void attack_3(void){ //前に移動しながら攻撃
+    printf("攻撃\n");
+    attack3();
+}
+
+void attack_4(void){ //ダッシュしながら攻撃
+    printf("攻撃\n");
+    attack4();
 }
 
 int main(int argc, char *argv[]) {
@@ -252,9 +261,9 @@ int main(int argc, char *argv[]) {
     while (rk) { // 無限loopする．rkはF12キーを押すと0となり，プログラムが停止します．
         cnt = reset(cnt); //画面をリセットする
         cnt = mobjudge(z2,z3,s,cnt);    //ゾンビを検出し、画面の移動と攻撃をする。
-        flag = zombie2(z2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
+        flag = zombie2(z2);
         if(flag == 1 && flag2 == 1 && flag3 == 1) {cnt = notmob(z2,z3,s,cnt);}  // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
         sleep(0.1);
     }
@@ -298,10 +307,11 @@ int main(int argc, char *argv[]) {
 
 MINECRAFT_CONTEST/python/minecraft/pushKey.py 
 MINECRAFT_CONTEST/python/minecraft/attack.py
-MINECRAFT_CONTEST/python/minecraft/clickLeft_Long.py
+MINECRAFT_CONTEST/python/minecraft/attack2.py
+MINECRAFT_CONTEST/python/minecraft/attack3.py
+MINECRAFT_CONTEST/python/minecraft/attack4.py
 MINECRAFT_CONTEST/python/minecraft/moveDash1.py
 MINECRAFT_CONTEST/python/minecraft/moveDash2.py
 MINECRAFT_CONTEST/python/minecraft/eat.py
 MINECRAFT_CONTEST/control.c
 */
-

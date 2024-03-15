@@ -8,6 +8,9 @@ void dash2(void);
 void eat(void);
 void jumpAttack(void);
 void attack(void);
+void attack2(void);
+void attack3(void);
+void attack4(void);
 
 void moveDataToFile(char* key);
 void initMoveDataFile(void);

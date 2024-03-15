@@ -49,6 +49,90 @@ void attack(void){
     }
 }
 
+void attack2(void){
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) {
+        // 子プロセス
+        execlp("python/python.exe", "python/python.exe", "python/minecraft/attack2.py", NULL);
+        perror("execlp");
+        exit(EXIT_FAILURE);
+    } else {
+        // 親プロセス
+        int status;
+        if (waitpid(pid, &status, 0) == -1) {
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+            printf("error:attack\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
+void attack3(void){
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) {
+        // 子プロセス
+        execlp("python/python.exe", "python/python.exe", "python/minecraft/attack3.py", NULL);
+        perror("execlp");
+        exit(EXIT_FAILURE);
+    } else {
+        // 親プロセス
+        int status;
+        if (waitpid(pid, &status, 0) == -1) {
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+            printf("error:attack\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
+void attack4(void){
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) {
+        // 子プロセス
+        execlp("python/python.exe", "python/python.exe", "python/minecraft/attack4.py", NULL);
+        perror("execlp");
+        exit(EXIT_FAILURE);
+    } else {
+        // 親プロセス
+        int status;
+        if (waitpid(pid, &status, 0) == -1) {
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+            printf("error:attack\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
 void attackLeft(void){
     char com[128] = "python/python.exe python/minecraft/clickLeft.py";
     int f = system(com);
