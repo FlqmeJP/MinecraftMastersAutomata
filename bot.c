@@ -30,13 +30,14 @@ int zombie2(long int z2[]){
     k = 1;
 
     if(b == 0) {flag = 1;}
-    for(i = 0; i < 15 ; i++) {
+    /*for(i = 0; i < 15 ; i++) {
         if(z2[i] != 0) {
             if(z2[i] != 1) {
                 flag = 1;
             }
         }
     }
+    */
     z2print(z2);
     return flag;
 }
@@ -116,41 +117,51 @@ int mobjudge(long int z2[],int z3[],int s[],int cnt){    //0,1,2 右下 3,4,5 �
     skeleton(s);
     zombie2(z2);
     if (z2[13] == 1 || z2[14] == 1) { //中央近・中
-        attack2();
+        attack_2();
     } else if (z2[5] == 1 || z2[11] == 1 || z3[2] == 1 || s[2] == 1) {    //左下近・左上近
         printf("視点左\n");
         pushKey("h");
-        attack2();
+        attack_2();
     } else if (z2[2] == 1 || z2[8] == 1 || z3[3] == 1 || s[3] == 1) {    //右下近・右上近 
         printf("視点右\n");
         pushKey("k");
-        attack2();
-    } else if (z2[4] == 1 || z2[10] == 1 || z3[1] == 1 || s[1] == 1) {   //左下中・左上中
+        attack_2();
+    } else if (z2[4] == 1 || z3[1] == 1 || s[1] == 1) {   //左下中
         printf("視点左\n");
         pushKey("h");
-        attack3();
-    } else if (z2[1] == 1 || z2[7] == 1 || z3[4] == 1 || s[4] == 1) {     //右下中・右上中
+        attack_2();
+    } else if (z2[1] == 1 || z3[4] == 1 || s[4] == 1) {     //右下中
         printf("視点右\n");
         pushKey("k");
-        attack3();
+        attack_2();
+    } else if(z2[10] == 1){ //左上中
+        printf("視点左\n");
+        pushKey("h");
+        attack_3();
+    } else if(z2[7] == 1 ){ //右上中
+        printf("視点右\n");
+        pushKey("k");
+        attack_3();
     } else if (z2[3] == 1 || z3[0] == 1 || s[0] == 1) {    //左下遠
         printf("視点左\n");
         pushKey("h");
-        attack3();
+        attack_2();
     } else if (z2[0] == 1 || z3[5] == 1 || s[5] == 1){    //右下遠
         printf("視点右\n");
         pushKey("k");
-        attack3();
+        attack_2();
     } else if (z2[12] == 1){    //中央遠
-        attack4();
+        attack_4();
     } else if (z2[9] == 1){    //左上遠
         printf("視点左\n");
         pushKey("h");
-        attack4();
+        attack_2();
+        attack_4();
     } else if (z2[6] == 1){    //右上遠
         printf("視点右\n");
         pushKey("k");
-        attack4();
+        attack_2();
+        attack_4();
     }
     cnt++;
     return cnt;
@@ -170,42 +181,58 @@ int notmob(long int z2[],int z3[],int s[],int cnt){   // 画面内にゾンビ�
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
         flag = zombie2(z2);
+        sleep(0.1);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("ダッシュ2\n");
             dash1();
-        }
+        }else{break;}
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
         flag = zombie2(z2);
+        sleep(0.1);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("ダッシュ3\n");
             dash1();
-        }
+        }else{break;}
         
+        sleep(0.2);
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
         flag = zombie2(z2);
+        sleep(0.1);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
             printf("視点右\n");
             pushKey("l");
+        }else{break;}
+        sleep(0.4);
+        flag2 = zombie3(z3);
+        flag3 = skeleton(s);
+        flag = zombie2(z2);
+        sleep(0.1);
+        if (flag == 1 && flag2 == 1 && flag3 == 1) {
+            printf("視点右\n");
+            pushKey("k");
+            sleep(0.2);
+            flag2 = zombie3(z3);
+            flag3 = skeleton(s);
+            flag = zombie2(z2);
+            sleep(0.1);
+        }else{break;}
+        if (flag == 1 && flag2 == 1 && flag3 == 1) {
+            printf("視点右\n");
+            pushKey("k");
+        }else{
+            pushKey("h");
+            break;
         }
         flag2 = zombie3(z3);
         flag3 = skeleton(s);
         flag = zombie2(z2);
         if (flag == 1 && flag2 == 1 && flag3 == 1) {
-            printf("視点右\n");
-            pushKey("k");
+        }else{
+            pushKey("h");
+            break;
         }
-        flag2 = zombie3(z3);
-        flag3 = skeleton(s);
-        flag = zombie2(z2);
-        if (flag == 1 && flag2 == 1 && flag3 == 1) {
-            printf("視点右\n");
-            pushKey("k");
-        }
-        flag2 = zombie3(z3);
-        flag3 = skeleton(s);
-        flag = zombie2(z2);
         cnt++;
     }
     return cnt;
@@ -224,22 +251,22 @@ int reset(int cnt){   // 視点を調整
 }
 
 void attack_1(void){
-    printf("攻撃\n");
+    printf("攻撃1\n");
     attack();
 }
 
 void attack_2(void){ //左右に画面を動かしながら攻撃
-    printf("攻撃\n");
+    printf("攻撃2\n");
     attack2();
 }
 
 void attack_3(void){ //前に移動しながら攻撃
-    printf("攻撃\n");
+    printf("攻撃3\n");
     attack3();
 }
 
 void attack_4(void){ //ダッシュしながら攻撃
-    printf("攻撃\n");
+    printf("攻撃4\n");
     attack4();
 }
 
@@ -294,6 +321,9 @@ int main(int argc, char *argv[]) {
 移動 AWSD
 コマンドライン /
 ダッシュ Z
+ホットバースロット1 1キー
+ホットバースロット2 2キー
+アイテムの使用 E
 
 ・ビデオ
 明るさ 100
