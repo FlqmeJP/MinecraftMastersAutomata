@@ -8,6 +8,6 @@
 <img src="https://img.shields.io/badge/-Python-3776AB.svg?logo=python&style=flat">
 
 ## 開発者
-### FlqmeJP
-### 72q84g
-### ryogo62231
+### ✓FlqmeJP
+### ✓72q84g
+### ✓ryogo6231
