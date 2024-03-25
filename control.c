@@ -195,6 +195,15 @@ void eat(void){
     }
 }
 
+void potion(void){
+    char com[128] = "python/python.exe python/minecraft/potion.py";
+    int f = system(com);
+    if(f != 0 && WEXITSTATUS(f) != 0 ){
+        printf("error:potion\n");
+        exit(1);
+    }
+}
+
 void jumpAttack(void){
     char com[128] = "python/python.exe python/minecraft/jumpattack.py";
     int f = system(com);

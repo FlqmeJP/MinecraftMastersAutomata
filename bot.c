@@ -2,25 +2,19 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int zombie2(long int z2[]);
-int zombie3(int z3[]);
-int skeleton(int s[]);
+void zombie2(long int z2[]);
 void z2print(long int z2[]);
-void z3print(int z3[]);
-void sprint(int s[]);
-int mobjudge(long int z2[],int z3[],int s[],int cnt);
-int notmob(long int z2[],int z3[],int s[],int cnt);
-int reset(int cnt);
+void mobjudge(long int z2[]);
+int repeat(int cnt);
 void attack_1(void);
 void attack_2(void);
 void attack_3(void);
 void attack_4(void);
 
-int zombie2(long int z2[]){
+void zombie2(long int z2[]){
     long int b;
     int i;
     long int k = 1;
-    int flag = 0;
     b = detectZombie2();
     printf("%015ld\n", b);
     for (i = 0; i < 15; i++) {
@@ -28,49 +22,8 @@ int zombie2(long int z2[]){
         k = k * 10;
     }
     k = 1;
-
-    if(b == 0) {flag = 1;}
-    /*for(i = 0; i < 15 ; i++) {
-        if(z2[i] != 0) {
-            if(z2[i] != 1) {
-                flag = 1;
-            }
-        }
-    }
-    */
     z2print(z2);
-    return flag;
-}
-
-int zombie3(int z3[]){
-    int c,i,k = 1;
-    int flag = 0;
-    sleep(0.2);
-    c = detectZombie3();
-    printf("%06d\n", c);
-    for (i = 0; i < 6; i++) {
-        z3[6 - 1 - i] = c / k % 10;
-        k = k * 10;
-    }
-    k = 1;
-    if(c == 0) {flag = 1;}
-    z3print(z3);
-    return flag;
-}
-
-int skeleton(int s[]){
-    int c,i,k = 1;
-    int flag = 0;
-    c = detectSkeleton();
-    printf("%06d\n", c);
-    for (i = 0; i < 6; i++) {
-        s[6 - 1 - i] = c / k % 10;
-        k = k * 10;
-    }
-    k = 1;
-    if(c == 0) {flag = 1;}
-    sprint(s);
-    return flag;
+    return;
 }
 
 void z2print(long int z2[]){
@@ -92,177 +45,64 @@ void z2print(long int z2[]){
     printf("\n");
 }
 
-void z3print(int z3[]){
-    if(z3[0] == 1) {printf("左1 ");}
-    if(z3[1] == 1) {printf("左2 ");}
-    if(z3[2] == 1) {printf("左3 ");}
-    if(z3[3] == 1) {printf("右3 ");}
-    if(z3[4] == 1) {printf("右2 ");}
-    if(z3[5] == 1) {printf("右1 ");}
-    printf("\n");
-}
-
-void sprint(int s[]){
-    if(s[0] == 1) {printf("左1 ");}
-    if(s[1] == 1) {printf("左2 ");}
-    if(s[2] == 1) {printf("左3 ");}
-    if(s[3] == 1) {printf("右3 ");}
-    if(s[4] == 1) {printf("右2 ");}
-    if(s[5] == 1) {printf("右1 ");}
-    printf("\n");
-}
-
-int mobjudge(long int z2[],int z3[],int s[],int cnt){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11 左上 12,13,14 中央   遠い←→近い
-    zombie3(z3);
-    skeleton(s);
+void mobjudge(long int z2[]){    //0,1,2 右下 3,4,5 左下 6,7,8 右上 9,10,11 左上 12,13,14 中央   遠い←→近い
     zombie2(z2);
     if (z2[13] == 1 || z2[14] == 1) { //中央近・中
-        attack_2();
-    } else if (z2[5] == 1 || z2[11] == 1 || z3[2] == 1 || s[2] == 1) {    //左下近・左上近
+    } else if (z2[5] == 1 || z2[11] == 1) {    //左下近・左上近
         printf("視点左\n");
         pushKey("h");
-        attack_2();
-    } else if (z2[2] == 1 || z2[8] == 1 || z3[3] == 1 || s[3] == 1) {    //右下近・右上近 
+    } else if (z2[2] == 1 || z2[8] == 1) {    //右下近・右上近 
         printf("視点右\n");
         pushKey("k");
-        attack_2();
-    } else if (z2[4] == 1 || z3[1] == 1 || s[1] == 1) {   //左下中
+    } else if (z2[4] == 1) {   //左下中
         printf("視点左\n");
         pushKey("h");
-        attack_2();
-    } else if (z2[1] == 1 || z3[4] == 1 || s[4] == 1) {     //右下中
+    } else if (z2[1] == 1) {     //右下中
         printf("視点右\n");
         pushKey("k");
-        attack_2();
     } else if(z2[10] == 1){ //左上中
         printf("視点左\n");
         pushKey("h");
-        attack_3();
     } else if(z2[7] == 1 ){ //右上中
         printf("視点右\n");
         pushKey("k");
-        attack_3();
-    } else if (z2[3] == 1 || z3[0] == 1 || s[0] == 1) {    //左下遠
+    } else if (z2[3] == 1) {    //左下遠
         printf("視点左\n");
         pushKey("h");
-        attack_2();
-    } else if (z2[0] == 1 || z3[5] == 1 || s[5] == 1){    //右下遠
+    } else if (z2[0] == 1){    //右下遠
         printf("視点右\n");
         pushKey("k");
-        attack_2();
     } else if (z2[12] == 1){    //中央遠
-        attack_4();
     } else if (z2[9] == 1){    //左上遠
         printf("視点左\n");
         pushKey("h");
-        attack_2();
-        attack_4();
     } else if (z2[6] == 1){    //右上遠
         printf("視点右\n");
         pushKey("k");
-        attack_2();
-        attack_4();
+    } else {
     }
-    cnt++;
-    return cnt;
+    return;
 }
 
-
-int notmob(long int z2[],int z3[],int s[],int cnt){   // 画面内にゾンビがいない間、視点を右に移動させ、前に移動する。
-    int flag = 1;
-    int flag2 = 1;
-    int flag3 = 1;
-    flag2 = zombie3(z3);
-    flag3 = skeleton(s);
-    flag = zombie2(z2);
-    while (rk != 0 && flag == 1 && flag2 == 1 && flag3 == 1) { 
-        printf("ダッシュ1\n");
-        dash1();
-        flag2 = zombie3(z3);
-        flag3 = skeleton(s);
-        flag = zombie2(z2);
-        sleep(0.1);
-        if (flag == 1 && flag2 == 1 && flag3 == 1) {
-            printf("ダッシュ2\n");
-            dash1();
-        }else{break;}
-        flag2 = zombie3(z3);
-        flag3 = skeleton(s);
-        flag = zombie2(z2);
-        sleep(0.1);
-        if (flag == 1 && flag2 == 1 && flag3 == 1) {
-            printf("ダッシュ3\n");
-            dash1();
-        }else{break;}
-        
-        sleep(0.2);
-        flag2 = zombie3(z3);
-        flag3 = skeleton(s);
-        flag = zombie2(z2);
-        sleep(0.1);
-        if (flag == 1 && flag2 == 1 && flag3 == 1) {
-            printf("視点右\n");
-            pushKey("l");
-        }else{break;}
-        sleep(0.4);
-        flag2 = zombie3(z3);
-        flag3 = skeleton(s);
-        flag = zombie2(z2);
-        sleep(0.1);
-        if (flag == 1 && flag2 == 1 && flag3 == 1) {
-            printf("視点右\n");
-            pushKey("k");
-            sleep(0.2);
-            flag2 = zombie3(z3);
-            flag3 = skeleton(s);
-            flag = zombie2(z2);
-            sleep(0.1);
-        }else{break;}
-        if (flag == 1 && flag2 == 1 && flag3 == 1) {
-            printf("視点右\n");
-            pushKey("k");
-        }else{
-            pushKey("h");
-            break;
-        }
-        flag2 = zombie3(z3);
-        flag3 = skeleton(s);
-        flag = zombie2(z2);
-        if (flag == 1 && flag2 == 1 && flag3 == 1) {
-        }else{
-            pushKey("h");
-            break;
-        }
-        cnt++;
+int repeat(int cnt){   // 定期的に繰り返す
+    if(cnt % 3 == 2){
+        attack4();
+    } else {
+        attack2();
     }
-    return cnt;
-}
 
-int reset(int cnt){   // 視点を調整
-    if (cnt == 0) { 
-        printf("視点リセット\n");
-        pushKey("c"); 
-        cnt++;
+    if (cnt % 3 == 0){
+        pushKey("1");
     }
-    if (cnt % 20 == 0){
+    if (cnt == 36 ||(cnt > 36 && cnt % 20 == 0)){
         eat();
     }
     return cnt;
 }
 
-void attack_1(void){
-    printf("攻撃1\n");
-    attack();
-}
-
 void attack_2(void){ //左右に画面を動かしながら攻撃
     printf("攻撃2\n");
     attack2();
-}
-
-void attack_3(void){ //前に移動しながら攻撃
-    printf("攻撃3\n");
-    attack3();
 }
 
 void attack_4(void){ //ダッシュしながら攻撃
@@ -273,12 +113,7 @@ void attack_4(void){ //ダッシュしながら攻撃
 int main(int argc, char *argv[]) {
     long int b; // detectZombie2から値を受け取る
     long int z2[15];    //bの値を配列に入れる
-    int z3[6];
-    int s[6];
     int cnt = 0;   //視点リセット用
-    int flag;
-    int flag2;
-    int flag3;
 
     init(); // Minecraftのゲームコントロール関数．ウィンドウサイズを設定する等を行う．
     setTime();   // Minecraft上で時間を夜にしてくれる．
@@ -286,12 +121,13 @@ int main(int argc, char *argv[]) {
     setSurvival(); // サバイバルモードにする．
 
     while (rk) { // 無限loopする．rkはF12キーを押すと0となり，プログラムが停止します．
-        cnt = reset(cnt); //画面をリセットする
-        cnt = mobjudge(z2,z3,s,cnt);    //ゾンビを検出し、画面の移動と攻撃をする。
-        flag2 = zombie3(z3);
-        flag3 = skeleton(s);
-        flag = zombie2(z2);
-        if(flag == 1 && flag2 == 1 && flag3 == 1) {cnt = notmob(z2,z3,s,cnt);}  // 画面内にゾンビがいない間、視点を右に移動させ、定期的に前に移動する。
+        if(cnt == 0){
+            potion();
+        }
+        mobjudge(z2);    //ゾンビを検出し、画面の移動と攻撃をする。
+        cnt = repeat(cnt);
+        printf("%d\n",cnt);
+        cnt++;
         sleep(0.1);
     }
     setCreative(); // クリエイティブモードにする．
@@ -316,6 +152,7 @@ int main(int argc, char *argv[]) {
 スムースに左を見る H
 右を見る L
 左を見る G
+下を見る N
 インベントリ I
 攻撃する Q
 移動 AWSD
@@ -324,6 +161,8 @@ int main(int argc, char *argv[]) {
 ホットバースロット1 1キー
 ホットバースロット2 2キー
 アイテムの使用 E
+
+力のスプラッシュポーション 攻撃力上昇(6:00)
 
 ・ビデオ
 明るさ 100

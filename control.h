@@ -6,6 +6,7 @@ void attackRight(void);
 void dash1(void);
 void dash2(void);
 void eat(void);
+void potion(void);
 void jumpAttack(void);
 void attack(void);
 void attack2(void);
