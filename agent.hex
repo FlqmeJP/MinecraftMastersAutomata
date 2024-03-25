@@ -1,0 +1,12 @@
+def on_on_chat():
+    mobs.apply_effect(LEVITATION, mobs.target(NEAREST_PLAYER),100,100)
+player.on_chat("fly",on_on_chat)
+
+def on_on_chat1():
+    mobs.apply_effect(FIRE_RESISTANCE,mobs.target(NEAREST_PLAYER),100,120)
+    blocks.fill(FIRE,pos(28,0,30),pos(-28,0,-30))
+player.on_chat("fire",on_on_chat1)
+
+def on_on_chat2():
+    blocks.fill(TNT, pos(0, 0, 0), pos(10, 10, 10), FillOperation.REPLACE)
+player.on_chat("tnt", on_on_chat2)
